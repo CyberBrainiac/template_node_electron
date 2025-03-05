@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dell.T00 merge</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        text-align: center;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin: 20px 0;
+      }
+      #selected-path {
+        margin-top: 20px;
+        word-break: break-all;
+      }
+      #error-reason {
+        margin-top: 20px;
+        color: rgb(211, 72, 72);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Об'єднання текстових документів в один файл</h1>
+    <p>Оберіть папку в якій знаходяться ваші .T00 текстові документи</p>
+    <button id="select-folder-btn">Обрати папку</button>
+    <div id="selected-path"></div>
+    <div id="error-reason"></div>
+
+    <script>
+      const { ipcRenderer } = require("electron");
+
+      document
+        .getElementById("select-folder-btn")
+        .addEventListener("click", async () => {
+          const { createFileName, folderPath, status, errReason } =
+            await ipcRenderer.invoke("select-folder");
+          document.getElementById("selected-path").textContent = "";
+          document.getElementById("error-reason").textContent = "";
+
+          if (folderPath && status === "Success") {
+            document.getElementById(
+              "selected-path"
+            ).textContent = `Створено файл, шлях: ${folderPath}\\${createFileName}`;
+          }
+          if (status !== "Success") {
+            document.getElementById(
+              "error-reason"
+            ).textContent = `${errReason}`;
+          }
+        });
+    </script>
+  </body>
+</html>

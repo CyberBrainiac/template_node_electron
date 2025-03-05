@@ -1,0 +1,35 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "build-portable": "electron-builder --win portable"
+  },
+  "build": {
+    "appId": "com.arsenii.mergeT00",
+    "productName": "MergeT00",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "portable",
+      "icon": "resources/icon.ico"
+    },
+    "portable": {
+      "artifactName": "MergeT00.exe"
+    }
+  },
+  "keywords": [],
+  "author": "Arkhypov Arsenii",
+  "license": "ISC",
+  "description": "merge txt application",
+  "dependencies": {
+    "iconv-lite": "^0.6.3"
+  },
+  "devDependencies": {
+    "electron": "^34.3.0",
+    "electron-builder": "^25.1.8"
+  }
+}
