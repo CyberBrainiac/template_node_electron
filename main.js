@@ -47,7 +47,7 @@ ipcMain.handle("select-folder", async () => {
   const now = new Date();
   const hours = now.getHours();
   const minutes = now.getMinutes();
-  const createFileName = `merged_txt ${hours}-${minutes}`;
+  const createFileName = `merged_${hours}-${minutes}`;
   const programInfo = {
     folderPath: "",
     status: "Success",

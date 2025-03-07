@@ -3,7 +3,6 @@ function mergeFiles(filesContent) {
     data: [],
     status: "Success",
   };
-  let error;
 
   const mergeFileRows = filesContent.data.map((file) => toRows(file.content));
   let mergeFile = [];
