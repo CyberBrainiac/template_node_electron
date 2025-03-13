@@ -17,8 +17,8 @@ function mergeFiles(filesContent) {
     }
 
     for (let j = 1; j < mergeFileRows.length; j++) {
-      let fileContent = mergeFileRows[j]; //j = 1 because I skip first file content
-      currentRow += fileContent[i].slice(13); //return string whiout TIMI column;
+      let fileContent = mergeFileRows[j]; //j = 1 because I am going to skip first file content
+      currentRow += fileContent[i].slice(14); //return string whiout TIMI column;
     }
     mergeFile[i] = currentRow;
   }
@@ -29,6 +29,7 @@ function mergeFiles(filesContent) {
 
 function toRows(fileContent) {
   const rows = fileContent.split("\r\n"); //10 rows is header of document, 11 row is table heading. 12-13 rows - empty, 1 column of each document is TIMI
+
   return rows;
 }
 
