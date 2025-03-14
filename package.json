@@ -1,5 +1,5 @@
 {
-  "name": "merge_t00",
+  "name": "merget00",
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "build-portable": "electron-builder --win portable"
   },
   "build": {
-    "appId": "com.arsenii.mergeT00",
+    "appId": "com.arsenii.MergeT00",
     "productName": "MergeT00",
     "directories": {
       "output": "dist"

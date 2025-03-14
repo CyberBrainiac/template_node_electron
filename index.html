@@ -2,19 +2,24 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Dell.T00 merge</title>
+    <title>Merge.T00</title>
     <style>
       body {
         font-family: Arial, sans-serif;
         padding: 20px;
         text-align: center;
+        position: relative;
       }
       button {
         padding: 10px 20px;
         font-size: 16px;
         margin: 20px 0;
       }
+      .button-working {
+        background-color: rgb(82, 224, 148);
+      }
       #selected-path {
+        color: rgb(61, 138, 97);
         margin-top: 20px;
         word-break: break-all;
       }
@@ -22,37 +27,45 @@
         margin-top: 20px;
         color: rgb(211, 72, 72);
       }
+      #counter {
+        text-align: left;
+        padding-left: 4px;
+      }
     </style>
   </head>
   <body>
     <h1>Об'єднання текстових документів в один файл</h1>
     <p>Оберіть папку в якій знаходяться ваші .T00 текстові документи</p>
     <button id="select-folder-btn">Обрати папку</button>
+    <div id="counter"></div>
     <div id="selected-path"></div>
     <div id="error-reason"></div>
 
     <script>
       const { ipcRenderer } = require("electron");
 
-      document
-        .getElementById("select-folder-btn")
-        .addEventListener("click", async () => {
-          const { createFileName, folderPath, status, errReason } =
-            await ipcRenderer.invoke("select-folder");
-          document.getElementById("selected-path").textContent = "";
-          document.getElementById("error-reason").textContent = "";
+      const startBtn = document.getElementById("select-folder-btn");
+      startBtn.addEventListener("click", async () => {
+        startBtn.classList.add("button-working");
+        startBtn.textContent = "Виконується";
 
-          if (folderPath && status === "Success") {
-            document.getElementById(
-              "selected-path"
-            ).textContent = `Створено файл, шлях: ${folderPath}\\${createFileName}`;
-          }
-          if (status !== "Success") {
-            document.getElementById(
-              "error-reason"
-            ).textContent = `${errReason}`;
-          }
-        });
+        const { createFileName, folderPath, status, errReason } =
+          await ipcRenderer.invoke("select-folder");
+        document.getElementById("selected-path").textContent = "";
+        document.getElementById("error-reason").textContent = "";
+
+        if (folderPath && status === "Success") {
+          document.getElementById(
+            "selected-path"
+          ).textContent = `Створено файл, шлях: ${folderPath}\\${createFileName}`;
+        }
+        if (status !== "Success") {
+          document.getElementById("error-reason").textContent = `${errReason}`;
+        }
+
+        startBtn.classList.remove("button-working");
+        startBtn.textContent = "Обрати папку";
+      });
     </script>
   </body>
 </html>

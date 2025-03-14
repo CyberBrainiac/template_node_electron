@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog } = require("electron");
+const { app, BrowserWindow, ipcMain, dialog, Menu } = require("electron");
 const readDOSFiles = require("./readDOSFiles");
 const createFile = require("./createFile");
 const transformData = require("./transformData");
@@ -8,7 +8,7 @@ let mainWindow;
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 600,
-    height: 460,
+    height: 420,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -19,6 +19,8 @@ function createWindow() {
 
   // Open DevTools in development (optional)
   // mainWindow.webContents.openDevTools();
+
+  Menu.setApplicationMenu(null); //hide tool bar in window
 
   mainWindow.on("closed", () => {
     mainWindow = null;
@@ -45,8 +47,8 @@ ipcMain.handle("select-folder", async () => {
     properties: ["openDirectory"],
   });
   const now = new Date();
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
   const createFileName = `merged_${hours}-${minutes}`;
   const programInfo = {
     folderPath: "",

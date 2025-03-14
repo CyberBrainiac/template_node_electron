@@ -6,9 +6,10 @@ function mergeFiles(filesContent) {
 
   const mergeFileRows = filesContent.data.map((file) => toRows(file.content));
   let mergeFile = [];
+  let clearFile = [];
 
   for (let i = 0; i < mergeFileRows[0].length; i++) {
-    let currentRow = mergeFileRows[0][i];
+    let currentRow = mergeFileRows[0][i]; //init row with first file row.
 
     if (i < 9) {
       //skip 10 lines with document header
@@ -16,14 +17,26 @@ function mergeFiles(filesContent) {
       continue;
     }
 
+    if (i > 13 && isNaN(parseInt(currentRow))) {
+      //after document header and columns name
+      //skip 10 lines with duplicate document header. Gamma 1101 will be duplicate header each 200 rows, I am goin to skip it
+      mergeFile[i] = undefined;
+      continue;
+    }
+
     for (let j = 1; j < mergeFileRows.length; j++) {
       let fileContent = mergeFileRows[j]; //j = 1 because I am going to skip first file content
-      currentRow += fileContent[i].slice(14); //return string whiout TIMI column;
+      currentRow += fileContent[i].slice(14); //return string without TIMI column;
     }
     mergeFile[i] = currentRow;
   }
 
-  response.data = mergeFile.join("\r\n");
+  for (const row of mergeFile) {
+    if (typeof row === "undefined") continue;
+    clearFile.push(row);
+  }
+  response.data = clearFile.join("\r\n");
+
   return response;
 }
 
