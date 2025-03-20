@@ -80,6 +80,8 @@ ipcMain.handle("select-folder", async () => {
 
     if (creatingFileResult.status !== "Success") {
       // return programInfo
+      console.log("Error: ", readingFileResult.errReason);
+
       throw new Error(readingFileResult.errReason);
     }
 
