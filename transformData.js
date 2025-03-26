@@ -26,7 +26,8 @@ function mergeFiles(filesContent) {
 
     for (let j = 1; j < mergeFileRows.length; j++) {
       let fileContent = mergeFileRows[j]; //j = 1 because I am going to skip first file content
-      currentRow += fileContent[i].slice(14); //return string without TIMI column;
+      fileRow = " " + fileContent[i].slice(14); //return string without TIMI column; //some tables has 13 symbols for TIMI, some has 14. For safety work with each format, i need to add white space
+      currentRow += fileRow;
     }
     mergeFile[i] = currentRow;
   }
