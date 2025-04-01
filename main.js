@@ -82,15 +82,14 @@ ipcMain.handle("select-folder", async () => {
       // return programInfo
       console.log("Error: ", readingFileResult.errReason);
 
-      throw new Error(readingFileResult.errReason);
+      throw new Error(creatingFileResult.errReason);
     }
 
     programInfo.folderPath = folderPath;
     return programInfo;
   } catch (error) {
     programInfo.folderPath = folderPath;
-    programInfo.errReason =
-      creatingFileResult?.errReason ?? readingFileResult?.errReason;
+    programInfo.errReason = error.message;
     programInfo.status = "Failed";
     return programInfo;
   }
